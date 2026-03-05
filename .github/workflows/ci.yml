@@ -19,23 +19,23 @@ name: CI
 # "on" defines WHEN this workflow runs.
 on:
   push:
-    branches: [ main, master ]      # Run on every push to main
+    branches: [main, master] # Run on every push to main
   pull_request:
-    branches: [ main, master ]      # Run on PRs targeting main
+    branches: [main, master] # Run on PRs targeting main
 
 # ── PERMISSIONS ─────────────────────────────────────────────────────────────
 # The workflow needs write access to publish test results and badges.
 permissions:
-  contents: write                   # Push coverage badge to gh-pages branch
-  checks: write                     # Publish test results as GitHub Checks
-  pull-requests: write              # Comment test summary on PRs
+  contents: write # Push coverage badge to gh-pages branch
+  checks: write # Publish test results as GitHub Checks
+  pull-requests: write # Comment test summary on PRs
 
 # ── JOBS ────────────────────────────────────────────────────────────────────
 # Jobs run in parallel by default. We have one job: build-and-test.
 jobs:
   build-and-test:
     name: Build & Test
-    runs-on: ubuntu-latest          # Use a GitHub-hosted Linux runner
+    runs-on: ubuntu-latest # Use a GitHub-hosted Linux runner
 
     steps:
       # ── Step 1: Check out the repository ──────────────────────────────────
@@ -47,9 +47,9 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'    # Eclipse Temurin (free, production-ready)
-          cache: 'maven'             # Cache ~/.m2/repository between runs
+          java-version: "17"
+          distribution: "temurin" # Eclipse Temurin (free, production-ready)
+          cache: "maven" # Cache ~/.m2/repository between runs
 
       # ── Step 3: Build and run tests with coverage ─────────────────────────
       # 'mvn clean verify' runs the full lifecycle:
@@ -63,12 +63,13 @@ jobs:
       # Parses JUnit XML reports (target/surefire-reports/) and shows
       # test results directly in the GitHub Actions UI and on PRs.
       - name: Publish test results
-        uses: dorny/test-reporter@v1
-        if: always()                 # Run even if tests fail
+        uses: dorny/test-reporter@v2
+        if: always() # Run even if tests fail
         with:
           name: Test Results
-          path: '**/surefire-reports/TEST-*.xml'
+          path: "**/surefire-reports/TEST-*.xml"
           reporter: java-junit
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # ── Step 5: Generate coverage badge ───────────────────────────────────
       # Reads the JaCoCo XML report and generates an SVG badge showing
@@ -76,11 +77,11 @@ jobs:
       # branch so the README can reference it.
       - name: Generate JaCoCo coverage badge
         uses: cicirello/jacoco-badge-generator@v2
-        if: github.event_name == 'push'    # Only on push (not PRs)
+        if: github.event_name == 'push' # Only on push (not PRs)
         with:
           jacoco-csv-file: target/site/jacoco/jacoco.csv
           badges-directory: .badges
-          generate-branches-badge: true     # Also show branch coverage
+          generate-branches-badge: true # Also show branch coverage
 
       # ── Step 6: Publish badge to gh-pages branch ──────────────────────────
       # Commits the generated SVG badge files to the gh-pages branch.

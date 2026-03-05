@@ -4,11 +4,10 @@
 <!-- These badges are auto-updated by the CI pipeline on every push.     -->
 <!-- Replace YOUR_USERNAME/YOUR_REPO with your actual GitHub path.       -->
 
-![Build Status](https://github.com/UHSETeaching/Maven-Build-System-Demo/actions/workflows/ci.yml/badge.svg)
-![Coverage](https://github.com/UHSETeaching/Maven-Build-System-Demo/raw/gh-pages/.badges/jacoco.svg)
-![Branches](https://github.com/UHSETeaching/Maven-Build-System-Demo/raw/gh-pages/.badges/branches.svg)
+![Build Status](https://github.com/k0src/Maven-Build-System-Demo/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://github.com/k0src/Maven-Build-System-Demo/raw/gh-pages/.badges/jacoco.svg)
+![Branches](https://github.com/k0src/Maven-Build-System-Demo/raw/gh-pages/.badges/branches.svg)
 
-Hi
 A simple Java project that demonstrates core Maven (build system) concepts and CI/CD with GitHub Actions.
 
 ## Project Structure (Maven Standard Layout)
@@ -19,7 +18,7 @@ Java/
 ├── .github/workflows/ci.yml                   # CI pipeline (GitHub Actions)
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/wordfreq/        # Application source code
+│   │   ├── java/com/example/wordfreq/         # Application source code
 │   │   │   ├── App.java                       # Entry point (main class)
 │   │   │   ├── CsvExporter.java               # CSV export (Commons CSV)
 │   │   │   └── WordFrequencyAnalyzer.java     # Core logic
